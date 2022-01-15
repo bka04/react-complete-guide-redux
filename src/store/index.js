@@ -1,9 +1,31 @@
 import { createStore } from 'redux';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   counter: 0,
   showCounter: true
 }
+
+createSlice({
+  name: 'counter',
+  initialState,
+  reducers: {
+    increment(state) {
+      //allowed to "mutate" state here! redux toolkit uses immer, which creates copy of state as needed.
+      //don't need to return the whole state like without the toolkit
+      state.counter++;
+    },
+    decrement(state) {
+      state.counter--;
+    },
+    increase(state, action) {
+      state.counter = state.counter + action.amount;
+    },
+    toggleCounter(state) {
+      state.counter = !state.counter;
+    }
+  }
+})
 
 const counterReducer = (state = initialState, action) => {
   if (action.type === 'increment') {
